@@ -229,7 +229,7 @@ int main(int argc, char **argv) {
 												(data_buffer[offset + 1] << 8);
 						}
 						else if (bytes_in_each_channel == 1) {
-							data_in_channel = data_buffer[offset] & 0x0;
+							data_in_channel = data_buffer[offset] & 0x00ff;
 							data_in_channel -= 128; //in wave, 8-bit are unsigned, so shifting to signed
 						}
 
