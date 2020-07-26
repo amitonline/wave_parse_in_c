@@ -219,17 +219,18 @@ int main(int argc, char **argv) {
 						printf("Channel#%d : ", (xchannels+1));
 						// convert data from little endian to big endian based on bytes in each channel sample
 						if (bytes_in_each_channel == 4) {
-							data_in_channel = data_buffer[offset] | 
-												(data_buffer[offset + 1]<<8) | 
-												(data_buffer[offset + 2]<<16) | 
+							data_in_channel = (data_buffer[offset] & 0x00ff) | 
+												((data_buffer[offset + 1] & 0x00ff) <<8) | 
+												((data_buffer[offset + 2] & 0x00ff) <<16) | 
 												(data_buffer[offset + 3]<<24);
 						}
 						else if (bytes_in_each_channel == 2) {
-							data_in_channel = data_buffer[offset] |
+							data_in_channel = (data_buffer[offset] & 0x00ff) |
 												(data_buffer[offset + 1] << 8);
 						}
 						else if (bytes_in_each_channel == 1) {
-							data_in_channel = data_buffer[offset];
+							data_in_channel = data_buffer[offset] & 0x0;
+							data_in_channel -= 128; //in wave, 8-bit are unsigned, so shifting to signed
 						}
 
 						offset += bytes_in_each_channel;		
